@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"text/tabwriter"
 	"unicode"
 )
 
@@ -85,10 +86,12 @@ func ShortName(name string) string {
 }
 
 func PrintMemes(memes []Meme) {
+	w := new(tabwriter.Writer)
+	w.Init(os.Stdout, 0, 8, 1, ' ', 0)
 	for _, meme := range memes {
-		// TODO(dmac) Better tabs
-		fmt.Printf("%s\t%s\n", ShortName(meme.Name), meme.URL)
+		fmt.Fprintf(w, "%s\t%s\n", ShortName(meme.Name), meme.URL)
 	}
+	w.Flush()
 }
 
 func ChooseMeme(memes []Meme, needle string) (Meme, bool) {
