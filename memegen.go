@@ -123,6 +123,9 @@ func GenerateMeme(meme Meme, topText string, bottomText string) (string, error) 
 	values.Set("text1", bottomText)
 
 	resp, err := http.PostForm("https://api.imgflip.com/caption_image", values)
+	if err != nil {
+		return "", err
+	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
